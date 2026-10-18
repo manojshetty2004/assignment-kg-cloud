@@ -1,20 +1,6 @@
 
-"""
-Three-layer loan reasoning knowledge graph.
 
-Layers:
-1. Case layer: facts about Applications A and B.
-2. Knowledge layer: Early payment -> Paying before due date ->
-   Possible supplier pressure / liquidity strain -> Thin cash buffer ->
-   Potential repayment risk.
-3. Conditions layer: evidence that cancels or amplifies the hypothesis.
-
-The assessment is computed by traversing the knowledge chain and applying
-the conditions present in each scenario.
-
-Note: This is an illustrative reasoning model, not a validated credit model.
-Payment timing refers to payments the business makes to its suppliers.
-"""
+#Three-layer loan reasoning knowledge graph.
 
 from __future__ import annotations
 
@@ -29,9 +15,7 @@ EARLY_PAYMENT_THRESHOLD_DAYS = 10
 def build_graph() -> nx.DiGraph:
     graph = nx.DiGraph()
 
-    # -------------------------------------------------
     # 1. CASE LAYER: facts about the two applications
-    # -------------------------------------------------
     case_nodes = {
         "app_A": {
             "label": "Application A",
@@ -95,9 +79,9 @@ def build_graph() -> nx.DiGraph:
         graph.add_edge(app, amount, relation="has_fact")
         graph.add_edge(app, payment, relation="has_payment_timing")
 
-    # -------------------------------------------------
+
     # 2. SHARED KNOWLEDGE LAYER: reasoning chain
-    # -------------------------------------------------
+
     knowledge_nodes = {
         "early_payment": {
             "label": "Early payment",
